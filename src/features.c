@@ -31,3 +31,6 @@ void first_pixel(char* source_path){
     free_image_data(data);
 }
 
+void second_line(char* source_path){
+   
+}
