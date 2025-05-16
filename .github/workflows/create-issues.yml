@@ -1,4 +1,4 @@
-name: Import issues from Template 
+name: Import issues from Template
 
 on:
   fork: {}
@@ -17,3 +17,6 @@ jobs:
       - uses: Estia-1a/projetGenieInfo_public/actions/issue-mover@issues-v2022
         with:
           destination-repo: ${{ github.repository }}
+
+
+          
