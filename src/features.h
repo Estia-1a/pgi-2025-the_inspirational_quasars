@@ -4,4 +4,6 @@
 
 void helloWorld();
 
+void dimension(const char* source_path);
+
 #endif
