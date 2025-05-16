@@ -32,7 +32,6 @@ void first_pixel(char* source_path){
 }
 
 void second_line(char* source_path){
-    printf("second_line");
     int width, height, channel_count; 
     unsigned char* data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
