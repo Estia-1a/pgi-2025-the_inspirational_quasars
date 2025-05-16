@@ -23,5 +23,7 @@ void dimension(const char* source_path){
     free_image_data(data);
 }
 
+void first_pixel(const char* source_path){
 
+}
 
