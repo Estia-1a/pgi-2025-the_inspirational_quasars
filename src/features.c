@@ -261,3 +261,19 @@ void color_blue(char *source_path){
     }
     write_image_data("image_out.bmp", data, width, height);
 }
+
+void color_green(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    int i;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for (i=0;i<width*height*3;i++){
+        if (i%3 == 2){
+            data[i]=0;
+        }
+        if (i%3 == 0){
+            data[i]=0;
+        }
+    }
+    write_image_data("image_out.bmp", data, width, height);
+}
