@@ -52,7 +52,8 @@ void second_line(char *source_path)
     free_image_data(data);
 }
 
-void print_pixel(char *source_path, int x, int y){
+void print_pixel(char *source_path, int x, int y)
+{
     int width, height, channel_count;
     unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
@@ -61,6 +62,13 @@ void print_pixel(char *source_path, int x, int y){
     printf("print_pixel (%d,%d): %d, %d, %d", x, y, pixel->R, pixel->G, pixel->B);
     free_image_data(data);
 }
-void max_pixel(char *source_path){
+
+void max_pixel(char *source_path)
+{
+    
+}
+
+void max_component(char *source_path)
+{
     
 }
