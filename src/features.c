@@ -188,5 +188,44 @@ void min_component(char *source_path, char composante)
 }
 
 void stat_report(char *source_path){
-    
+    int width, height, channel_count;
+    unsigned char *data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    FILE *stat_report;
+    stat_report = freopen("report.txt", "w",stdout);
+    max_pixel(source_path);
+    printf("\n");
+    printf("\n");
+
+    min_pixel(source_path);
+    printf("\n");
+    printf("\n");
+
+    max_component(source_path,'R');
+    printf("\n");
+    printf("\n");
+
+    max_component(source_path,'G');
+    printf("\n");
+    printf("\n");
+
+    max_component(source_path,'B');
+    printf("\n");
+    printf("\n");
+
+    min_component(source_path,'R');
+    printf("\n");
+    printf("\n");
+
+    min_component(source_path,'G');
+    printf("\n");
+    printf("\n");
+
+    min_component(source_path,'B');
+    printf("\n");
+    printf("\n");
+
+    fclose(stat_report);
+
+    free_image_data(data);
 }

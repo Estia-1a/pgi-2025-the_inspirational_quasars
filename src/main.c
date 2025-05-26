@@ -71,5 +71,9 @@ int main(int argc, char **argv) {
     char composante = configuration.arguments[0][0];
     min_component(configuration.filenames[0], composante);
   }
+  else if ( strncmp( configuration.command, "stat_report", 11 ) == 0 ) {
+    /* first_pixel() function is defined in feature.h and implemented in feature.c */
+    stat_report(configuration.filenames[0]);
+  }
   return 0;
 }
