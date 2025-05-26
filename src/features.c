@@ -277,3 +277,7 @@ void color_green(char *source_path){
     }
     write_image_data("image_out.bmp", data, width, height);
 }
+
+void color_gray(char *source_path){
+    
+}
