@@ -279,5 +279,19 @@ void color_green(char *source_path){
 }
 
 void color_gray(char *source_path){
-    
+    int width, height, channel_count;
+    unsigned char *data;
+    int i, j, somme=0, couleur;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for (i=0;i<width*height;i++){
+        for (j=0;j<2;j++){
+            somme+=data[i*3+j];
+        }
+        couleur = somme/3;
+        data[3*i] = couleur;
+        data[3*i+1] = couleur;
+        data[3*i+2] = couleur;
+        somme = 0;
+    }
+    write_image_data("image_out.bmp", data, width, height);
 }
