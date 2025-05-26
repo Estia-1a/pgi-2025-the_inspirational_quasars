@@ -308,5 +308,26 @@ void color_invert(char *source_path){
 }
 
 void color_gray_luminance(char *source_path){
-    
+    int width, height, channel_count;
+    unsigned char *data;
+    int i, j, somme=0;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for (i=0;i<width*height;i++){
+        for (j=0;j<2;j++){
+            if (j==0){
+                somme+=0.21*data[3*i+j];
+            }
+            if (j==1){
+                somme+=0.72*data[3*i+j];
+            }
+            if (j==2){
+                somme+=0.07*data[3*i+j];
+            }
+        }
+        data[3*i] = somme;
+        data[3*i+1] = somme;
+        data[3*i+2] = somme;
+        somme = 0;
+    }
+    write_image_data("image_out.bmp", data, width, height);
 }
