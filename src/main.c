@@ -57,5 +57,9 @@ int main(int argc, char **argv) {
     /* first_pixel() function is defined in feature.h and implemented in feature.c */
     max_pixel(configuration.filenames[0]);
   }
+  else if ( strncmp( configuration.command, "min_pixel", 9 ) == 0 ) {
+    /* first_pixel() function is defined in feature.h and implemented in feature.c */
+    min_pixel(configuration.filenames[0]);
+  }
   return 0;
 }
