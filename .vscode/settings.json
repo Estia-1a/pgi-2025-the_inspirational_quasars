@@ -13,4 +13,5 @@
     "files.associations": {
         "unistd.h": "c"
     },
+    "C_Cpp.errorSquiggles": "disabled",
 }

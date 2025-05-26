@@ -11,38 +11,53 @@
  * When the feature is totally implemented, your commit message must contain "close #n".
  */
 
-void helloWorld() {
+void helloWorld()
+{
     printf("Hello World !");
 }
 
-void dimension(const char* source_path){
-    int width, height, channel_count; 
-    unsigned char* data;
+void dimension(const char *source_path)
+{
+    int width, height, channel_count;
+    unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
-    printf("dimension: %d,%d",width,height);
+    printf("dimension: %d,%d", width, height);
     free_image_data(data);
 }
 
-void first_pixel(char* source_path){
-    int width, height, channel_count; 
-    unsigned char* data;
+void first_pixel(char *source_path)
+{
+    int width, height, channel_count;
+    unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
-    printf("fisrt_pixel: %d, %d, %d", data[0],data[1], data[2]);
+    printf("fisrt_pixel: %d, %d, %d", data[0], data[1], data[2]);
     free_image_data(data);
 }
 
-void tenth_pixel (char *source_path){
-    int width, height, channel_count; 
-    unsigned char* data;
+void tenth_pixel(char *source_path)
+{
+    int width, height, channel_count;
+    unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
-    printf("tenth_pixel: %d, %d, %d", data[30],data[31], data[32]);
+    printf("tenth_pixel: %d, %d, %d", data[30], data[31], data[32]);
     free_image_data(data);
 }
 
-void second_line(char* source_path){
-    int width, height, channel_count; 
-    unsigned char* data;
+void second_line(char *source_path)
+{
+    int width, height, channel_count;
+    unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
-    printf("second_line: %d, %d, %d", data[width*3],data[width*3 + 1], data[width*3 + 2]);
+    printf("second_line: %d, %d, %d", data[width * 3], data[width * 3 + 1], data[width * 3 + 2]);
+    free_image_data(data);
+}
+
+void print_pixel(char *source_path, int x, int y){
+    int width, height, channel_count;
+    unsigned char *data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    pixelRGB* pixel;
+    pixel = get_pixel(data, width, height, channel_count, x, y);
+    printf("print_pixel (%d,%d): %d, %d, %d", x, y, pixel->R, pixel->G, pixel->B);
     free_image_data(data);
 }
