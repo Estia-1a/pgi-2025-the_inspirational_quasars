@@ -229,3 +229,7 @@ void stat_report(char *source_path){
 
     free_image_data(data);
 }
+
+void color_red(char *south_path){
+    
+}
