@@ -53,5 +53,9 @@ int main(int argc, char **argv) {
     int y = atoi(configuration.arguments[1]);
     print_pixel(configuration.filenames[0], x, y);
   }
+  else if ( strncmp( configuration.command, "max_pixel", 9 ) == 0 ) {
+    /* first_pixel() function is defined in feature.h and implemented in feature.c */
+    max_pixel(configuration.filenames[0]);
+  }
   return 0;
 }
