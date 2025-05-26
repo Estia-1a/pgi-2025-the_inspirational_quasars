@@ -86,6 +86,29 @@ void max_pixel(char *source_path){
     free_image_data(data);
 }
 
+void min_pixel(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    int  i, j, mini=1000, somme=0, x, y, R, G, B;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for (i=0;i<=width*height-1;i++){
+        for (j=0;j<=2;j++){
+            somme+=data[i*3+j];
+        }
+        if (somme<mini){
+            mini = somme;
+            x = i%width;
+            y = i/width;
+            R = data[3*i];
+            G = data[3*i+1];
+            B = data[3*i+2];
+        }
+        somme = 0;
+    }
+    printf("min_pixel (%d,%d): %d, %d, %d", x, y, R, G, B);
+    free_image_data(data);
+}
+
 void max_component(char *source_path, char composante)
 {
     int width, height, channel_count; 
@@ -125,25 +148,41 @@ void max_component(char *source_path, char composante)
     free_image_data(data);
 }
 
-void min_pixel(char *source_path){
-    int width, height, channel_count;
+void min_component(char *source_path, char composante)
+{
+    int width, height, channel_count; 
+    int decalage, x, y, min = 256;
+    enum couleur{
+        rouge,
+        vert,
+        bleu,
+    };
     unsigned char *data;
-    int  i, j, mini=1000, somme=0, x, y, R, G, B;
     read_image_data(source_path, &data, &width, &height, &channel_count);
-    for (i=0;i<=width*height-1;i++){
-        for (j=0;j<=2;j++){
-            somme+=data[i*3+j];
-        }
-        if (somme<mini){
-            mini = somme;
-            x = i%width;
-            y = i/width;
-            R = data[3*i];
-            G = data[3*i+1];
-            B = data[3*i+2];
-        }
-        somme = 0;
+
+    if (composante == 'R'){
+        decalage = rouge;//0
     }
-    printf("min_pixel (%d,%d): %d, %d, %d", x, y, R, G, B);
+    else if (composante == 'G'){
+        decalage = vert;//1
+    }
+    else if (composante == 'B'){
+        decalage = bleu;//2
+    }
+    else{
+        printf("Invalid color component");
+        free_image_data(data);
+        return;
+    }
+    
+    int i;
+    for(i = 0; i<width*height; i++){
+        if (data[3 * i + decalage] < min){
+            min = data[3 * i + decalage];
+            x = i % width;
+            y = i / width;
+        }
+    }
+    printf ("min_component %c (%d,%d): %d", composante, x, y, min); // [R or G or B] (x,y): value
     free_image_data(data);
 }
