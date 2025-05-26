@@ -21,4 +21,6 @@ void min_pixel(char *source_path);
 void max_component(char* source_path, char composante);
 
 void min_component(char* source_path, char composante);
+
+void stat_report(char *source_path);
 #endif

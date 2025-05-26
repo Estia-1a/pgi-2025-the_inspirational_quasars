@@ -186,3 +186,7 @@ void min_component(char *source_path, char composante)
     printf ("min_component %c (%d,%d): %d", composante, x, y, min); // [R or G or B] (x,y): value
     free_image_data(data);
 }
+
+void stat_report(char *source_path){
+    
+}
