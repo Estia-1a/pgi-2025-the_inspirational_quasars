@@ -230,6 +230,18 @@ void stat_report(char *source_path){
     free_image_data(data);
 }
 
-void color_red(char *south_path){
-    
+void color_red(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    int i;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for (i=0;i<width*height*3;i++){
+        if (i%3 == 1){
+            data[i]=0;
+        }
+        if (i%3 == 2){
+            data[i]=0;
+        }
+    }
+    write_image_data("image_out.bmp", data, width, height);
 }
