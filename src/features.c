@@ -306,3 +306,7 @@ void color_invert(char *source_path){
     }
     write_image_data("image_out.bmp", data, width, height);  
 }
+
+void color_gray_luminance(char *source_path){
+    
+}
