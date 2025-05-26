@@ -61,5 +61,10 @@ int main(int argc, char **argv) {
     /* first_pixel() function is defined in feature.h and implemented in feature.c */
     min_pixel(configuration.filenames[0]);
   }
+  else if ( strncmp( configuration.command, "max_component", 13 ) == 0 ) {
+    /* first_pixel() function is defined in feature.h and implemented in feature.c */
+    char composante = configuration.arguments[0][0];
+    max_component(configuration.filenames[0], composante);
+  }
   return 0;
 }

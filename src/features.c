@@ -86,9 +86,43 @@ void max_pixel(char *source_path){
     free_image_data(data);
 }
 
-void max_component(char *source_path)
+void max_component(char *source_path, char composante)
 {
+    int width, height, channel_count; 
+    int decalage, x, y, max = -1;
+    enum couleur{
+        rouge,
+        vert,
+        bleu,
+    };
+    unsigned char *data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    if (composante == 'R'){
+        decalage = rouge;//0
+    }
+    else if (composante == 'G'){
+        decalage = vert;//1
+    }
+    else if (composante == 'B'){
+        decalage = bleu;//2
+    }
+    else{
+        printf("Invalid color component");
+        free_image_data(data);
+        return;
+    }
     
+    int i;
+    for(i = 0; i<width*height; i++){
+        if (data[3 * i + decalage] > max){
+            max = data[3 * i + decalage];
+            x = i % width;
+            y = i / width;
+        }
+    }
+    printf ("max_component %c (%d,%d): %d", composante, x, y, max); // [R or G or B] (x,y): value
+    free_image_data(data);
 }
 
 void min_pixel(char *source_path){
