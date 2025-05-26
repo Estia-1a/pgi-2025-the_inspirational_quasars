@@ -295,3 +295,14 @@ void color_gray(char *source_path){
     }
     write_image_data("image_out.bmp", data, width, height);
 }
+
+void color_invert(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    int i;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for (i=0;i<3*width*height;i++){
+        data[i] = 255 - data[i];
+    }
+    write_image_data("image_out.bmp", data, width, height);  
+}
