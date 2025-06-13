@@ -99,5 +99,9 @@ int main(int argc, char **argv) {
     /* first_pixel() function is defined in feature.h and implemented in feature.c */
     color_gray_luminance(configuration.filenames[0]);
   }
+  else if ( strncmp( configuration.command, "rotate_cw", 20 ) == 0 ) {
+    /* first_pixel() function is defined in feature.h and implemented in feature.c */
+    rotate_cw(configuration.filenames[0]);
+  }
   return 0;
 }
