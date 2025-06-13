@@ -370,5 +370,32 @@ void rotate_cw(char *source_path) {
 }
 
 void rotate_acw(char *source_path) {
-   
+    int width, height, channel_count;
+    unsigned char* data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+ 
+    unsigned char *newdata = (unsigned char *)malloc(width * height * channel_count * sizeof(unsigned char));
+    if (!newdata) {
+        free_image_data(data);
+        return;
+    }
+    int y;
+    int x;
+    for (y = 0; y < height; y++) {
+        for (x = 0; x < width; x++) {
+            pixelRGB *pixel = get_pixel(data, width, height, channel_count, x, y);
+            if (!pixel) continue;
+ 
+            int new_x = y;
+            int new_y = width - 1 - x;
+            int rotated_pos = channel_count * (new_y * height + new_x);
+ 
+            newdata[rotated_pos]     = pixel->R;
+            newdata[rotated_pos + 1] = pixel->G;
+            newdata[rotated_pos + 2] = pixel->B;
+        }
+    }
+ 
+    write_image_data("image_out.bmp", newdata, height, width);
+    free_image_data(data);
 }
