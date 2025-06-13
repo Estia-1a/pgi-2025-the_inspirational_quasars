@@ -368,3 +368,7 @@ void rotate_cw(char *source_path) {
     write_image_data("image_out.bmp", newdata, height, width);
     free_image_data(data);
 }
+
+void rotate_acw(char *source_path) {
+   
+}
