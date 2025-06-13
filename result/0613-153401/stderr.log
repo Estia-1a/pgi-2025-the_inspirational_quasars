@@ -1,0 +1,17 @@
+/home/runner/work/pgi-2025-the_inspirational_quasars/pgi-2025-the_inspirational_quasars/src/features.c: In function ‘rotate_cw’:
+/home/runner/work/pgi-2025-the_inspirational_quasars/pgi-2025-the_inspirational_quasars/src/features.c:346:47: warning: implicit declaration of function ‘malloc’ [-Wimplicit-function-declaration]
+  346 |     unsigned char *newdata = (unsigned char *)malloc(width * height * channel_count * sizeof(unsigned char));
+      |                                               ^~~~~~
+/home/runner/work/pgi-2025-the_inspirational_quasars/pgi-2025-the_inspirational_quasars/src/features.c:6:1: note: include ‘<stdlib.h>’ or provide a declaration of ‘malloc’
+    5 | #include "utils.h"
+  +++ |+#include <stdlib.h>
+    6 | 
+/home/runner/work/pgi-2025-the_inspirational_quasars/pgi-2025-the_inspirational_quasars/src/features.c:346:47: warning: incompatible implicit declaration of built-in function ‘malloc’ [-Wbuiltin-declaration-mismatch]
+  346 |     unsigned char *newdata = (unsigned char *)malloc(width * height * channel_count * sizeof(unsigned char));
+      |                                               ^~~~~~
+/home/runner/work/pgi-2025-the_inspirational_quasars/pgi-2025-the_inspirational_quasars/src/features.c:346:47: note: include ‘<stdlib.h>’ or provide a declaration of ‘malloc’
+/home/runner/work/pgi-2025-the_inspirational_quasars/pgi-2025-the_inspirational_quasars/src/features.c: In function ‘rotate_acw’:
+/home/runner/work/pgi-2025-the_inspirational_quasars/pgi-2025-the_inspirational_quasars/src/features.c:377:47: warning: incompatible implicit declaration of built-in function ‘malloc’ [-Wbuiltin-declaration-mismatch]
+  377 |     unsigned char *newdata = (unsigned char *)malloc(width * height * channel_count * sizeof(unsigned char));
+      |                                               ^~~~~~
+/home/runner/work/pgi-2025-the_inspirational_quasars/pgi-2025-the_inspirational_quasars/src/features.c:377:47: note: include ‘<stdlib.h>’ or provide a declaration of ‘malloc’
