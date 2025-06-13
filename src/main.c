@@ -75,5 +75,6 @@ int main(int argc, char **argv) {
     else if ( strncmp( configuration.command, "rotate_acw", 20 ) == 0 ) {
     rotate_acw(configuration.filenames[0]);
   }
+  
   return 0;
 }
