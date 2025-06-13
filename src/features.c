@@ -66,7 +66,7 @@ void print_pixel(char *source_path, int x, int y)
 void max_pixel(char *source_path){
     int width, height, channel_count;
     unsigned char *data;
-    int  i, j, maxi=0, somme=0, x, y, R, G, B;
+    int  i, j, maxi=-1, somme=0, x, y, R, G, B;
     read_image_data(source_path, &data, &width, &height, &channel_count);
     for (i=0;i<=width*height-1;i++){
         for (j=0;j<=2;j++){
