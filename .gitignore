@@ -8,6 +8,7 @@ estia-image/
 **/getopt/
 freud.exe
 /*.bmp
+/*report.txt
 
 #CMAKE
 CMakeLists.txt.user
