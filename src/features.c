@@ -244,6 +244,7 @@ void color_red(char *source_path){
         }
     }
     write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
 }
 
 void color_blue(char *source_path){
@@ -260,6 +261,7 @@ void color_blue(char *source_path){
         }
     }
     write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
 }
 
 void color_green(char *source_path){
@@ -276,6 +278,7 @@ void color_green(char *source_path){
         }
     }
     write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
 }
 
 void color_gray(char *source_path){
@@ -294,6 +297,7 @@ void color_gray(char *source_path){
         somme = 0;
     }
     write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
 }
 
 void color_invert(char *source_path){
@@ -305,6 +309,7 @@ void color_invert(char *source_path){
         data[i] = 255 - data[i];
     }
     write_image_data("image_out.bmp", data, width, height);  
+    free_image_data(data);
 }
 
 void color_gray_luminance(char *source_path){
@@ -313,7 +318,7 @@ void color_gray_luminance(char *source_path){
     int i, j, somme=0;
     read_image_data(source_path, &data, &width, &height, &channel_count);
     for (i=0;i<width*height;i++){
-        for (j=0;j<2;j++){
+        for (j=0;j<3;j++){
             if (j==0){
                 somme+=0.21*data[3*i+j];
             }
@@ -330,6 +335,7 @@ void color_gray_luminance(char *source_path){
         somme = 0;
     }
     write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
 }
 
 void rotate_cw(char *source_path){
