@@ -399,3 +399,23 @@ void rotate_acw(char *source_path) {
     write_image_data("image_out.bmp", newdata, height, width);
     free_image_data(data);
 }
+
+void mirror_horizontal(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    unsigned int i, j, y, var;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    int milieu = width/2;
+    for(y=0;y<height;y++){
+        printf("%d \n", y);
+        for (i=0;i<(y*width)+milieu;i++){
+            for (j=0;j<3;j++){
+                var =data[(i+y*width)*3+j];
+                data[(i+y*width)*3+j] = data[(width-i+y*width)*3+j];
+                data[(i+y*width)*3+j] = var;
+            }
+        }
+    }
+    write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
+}
