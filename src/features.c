@@ -1,5 +1,6 @@
 #include <estia-image.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "features.h"
 #include "utils.h"
@@ -446,4 +447,27 @@ void mirror_vertical(char *source_path){
     }
     write_image_data("image_out.bmp", data, width, height);
     free_image_data(data);
+}
+
+void scale_crop(char *source_path, int center_x, int center_y, int new_width, int new_height){
+    int width, height, channel_count;
+    unsigned char *data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    unsigned char *newdata = (unsigned char *)malloc(new_width * new_height * channel_count * sizeof(unsigned char));
+    if (!newdata) {
+        free_image_data(data);
+        return;
+    }
+ 
+    int i, x, y;
+    for(y = center_y - new_height/2; y < (center_y - new_height/2) + new_height; y++){
+         for (x = center_x - new_width/2; x < (center_x - new_width/2) + new_width; x++){
+            for (i = 0; i < channel_count; i++){
+                newdata[(y*width + x)*3 + i - (((center_y - new_height/2)*width + center_x - new_width/2)*3 + i)] = data[(y*width + x)*3 + i];
+            }
+        }
+    }
+    write_image_data("image_out.bmp", newdata, new_width, new_height);
+    free_image_data(data);
+    free(newdata);
 }
