@@ -423,3 +423,27 @@ void mirror_horizontal(char *source_path){
     write_image_data("image_out.bmp", data, width, height);
     free_image_data(data);
 }
+
+void mirror_vertical(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    int i, x, y, posH, posB;
+    unsigned char temp;
+    for(y = 0; y < height/2; y++){
+
+        for (x = 0; x < width; x++){
+            posH = (y * width + x) * channel_count; 
+            posB = ((height - 1 - y) * width + x) * channel_count;
+
+            for (i = 0; i < channel_count; i++){
+                temp = data[posH + i];
+                data[posH + i] = data[posB + i];
+                data[posB + i] = temp;
+            }
+        }
+    }
+    write_image_data("image_out.bmp", data, width, height);
+    free_image_data(data);
+}
