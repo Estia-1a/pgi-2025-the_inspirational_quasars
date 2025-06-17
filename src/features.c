@@ -284,11 +284,11 @@ void color_green(char *source_path){
 void color_gray(char *source_path){
     int width, height, channel_count;
     unsigned char *data;
-    int i, j, somme=0, couleur;
+    int i, j, somme = 0, couleur = 0;
     read_image_data(source_path, &data, &width, &height, &channel_count);
     for (i=0;i<width*height;i++){
         for (j=0;j<2;j++){
-            somme+=data[i*3+j];
+            somme += data[i*3+j];
         }
         couleur = somme/3;
         data[3*i] = couleur;
@@ -403,16 +403,20 @@ void rotate_acw(char *source_path) {
 void mirror_horizontal(char *source_path){
     int width, height, channel_count;
     unsigned char *data;
-    unsigned int i, j, y, var;
     read_image_data(source_path, &data, &width, &height, &channel_count);
-    int milieu = width/2;
-    for(y=0;y<height;y++){
-        printf("%d \n", y);
-        for (i=0;i<(y*width)+milieu;i++){
-            for (j=0;j<3;j++){
-                var =data[(i+y*width)*3+j];
-                data[(i+y*width)*3+j] = data[(width-i+y*width)*3+j];
-                data[(i+y*width)*3+j] = var;
+
+    int i, x, y, posD, posG;
+    unsigned char temp;
+    for(y = 0; y < height; y++){
+
+        for (x = 0; x < width/2; x++){
+            posG = (y * width + x) * channel_count; 
+            posD = (y * width + (width - 1 - x)) * channel_count;
+
+            for (i = 0; i < channel_count; i++){
+                temp = data[posG + i];
+                data[posG + i] = data[posD + i];
+                data[posD + i] = temp;
             }
         }
     }
