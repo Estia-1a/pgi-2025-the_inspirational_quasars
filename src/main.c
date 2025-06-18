@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include <estia-image.h>
 #include <getopt.h>
@@ -94,6 +95,10 @@ int main(int argc, char **argv) {
     scale_crop(configuration.filenames[0], center_x, center_y, new_width,new_height);
   }
   else if (strncmp( configuration.command, "scale_nearest", 15) == 0){
+    float X = atof(configuration.arguments[0]);
+    scale_nearest(configuration.filenames[0], X);
+  }
+  else if (strncmp( configuration.command, "scale_bilinear", 14) == 0){
     float X = atof(configuration.arguments[0]);
     scale_nearest(configuration.filenames[0], X);
   }

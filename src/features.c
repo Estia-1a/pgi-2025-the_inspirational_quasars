@@ -1,6 +1,7 @@
 #include <estia-image.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "features.h"
 #include "utils.h"
@@ -500,8 +501,6 @@ void scale_crop(char *source_path, int center_x, int center_y, int new_width, in
 }
 
 void scale_nearest(char *source_path, float X){
-    printf("scale_nearest\n");
-    printf("%f\n", X);
     // Initialisation
     int width, height, channel_count;
     unsigned char* data;
@@ -525,6 +524,73 @@ void scale_nearest(char *source_path, float X){
             newdata[(y * new_width + x)* channel_count] = data[(posy * width + posx) * channel_count];
             newdata[(y * new_width + x)* channel_count + 1] = data[(posy * width + posx) * channel_count + 1];
             newdata[(y * new_width + x)* channel_count + 2] = data[(posy * width + posx) * channel_count + 2];
+        }
+    }
+    
+    // Création de la nouvelle image
+    write_image_data("image_out.bmp", newdata, new_width, new_height);
+
+    // Libération de la mémoire
+    free_image_data(data);
+    free(newdata);
+}
+
+void scale_bilinear(char *source_path, float X){
+    // Initialisation
+    int width, height, channel_count;
+    unsigned char* data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    
+    // Calcul de la nouvelle taille
+    int new_width = width * X;
+    int new_height = height * X;
+    unsigned char *newdata = (unsigned char *)malloc(new_width * new_height * channel_count * sizeof(unsigned char));
+    if (!newdata) {
+        free_image_data(data);
+        return;
+    }
+
+    // Nouvelle image
+    int x, y, i;
+    for (y = 0; y < new_height; y++) {
+        for (x = 0; x < new_width; x++) {
+            int posX = (x / X);
+            int posY = (y / X); 
+
+            // Calcul des coordonnées pour l'interpolation bilinéaire
+            int x1 = posX;
+            int y1 = posY;
+            int x2 = (posX + 1 < width) ? posX + 1 : posX;
+            int y2 = (posY + 1 < height) ? posY + 1 : posY;
+            
+            // Points interpolation
+            unsigned char p1 = (y1 * width + x1) * channel_count;
+            unsigned char p2 = (y1 * width + x2) * channel_count;
+            unsigned char p3 = (y2 * width + x1) * channel_count;
+            unsigned char p4 = (y2 * width + x2) * channel_count;
+
+            // Calcul des coefficients d'interpolation
+            float d1x = fabs(x/X - x1);
+            float d1y = fabs(y/X - y1);
+            float d2x = 1 -  d1x;
+            float d2y = d1y;
+            float d3x = d1x;
+            float d3y = 1 -  d1y;
+            float d4x = d2x;
+            float d4y = d3y;
+
+            // Calcul pour chacun des canaux
+            for (i = 0; i < channel_count; i++) {
+                // Interpolation bilinéaire
+                newdata[(posY * new_width + posX)* channel_count + i] = 
+                    (unsigned char)(
+                        data[p1 + i] * d1x * d1y +
+                        data[p2 + i] * d2x * d2y +
+                        data[p3 + i] * d3x * d3y +
+                        data[p4 + i] * d4x * d4y
+                    );
+
+            }
         }
     }
     
