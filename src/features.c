@@ -499,7 +499,7 @@ void scale_crop(char *source_path, int center_x, int center_y, int new_width, in
     free(newdata);
 }
 
-void scale_nearest(char *source_path, int X){
+/*void scale_nearest(char *source_path, int X){
     printf("scale_nearest\n");
     int width, height, channel_count;
     unsigned char* data;
@@ -510,4 +510,5 @@ void scale_nearest(char *source_path, int X){
         free_image_data(data);
         return;
     }
-}
+
+}*/
