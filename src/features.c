@@ -499,16 +499,39 @@ void scale_crop(char *source_path, int center_x, int center_y, int new_width, in
     free(newdata);
 }
 
-/*void scale_nearest(char *source_path, int X){
+void scale_nearest(char *source_path, float X){
     printf("scale_nearest\n");
+    printf("%f\n", X);
+    // Initialisation
     int width, height, channel_count;
     unsigned char* data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
- 
-    unsigned char *newdata = (unsigned char *)malloc(width * height * channel_count * sizeof(unsigned char));
+    
+    // Calcul de la nouvelle taille
+    int new_width = width * X;
+    int new_height = height * X;
+    unsigned char *newdata = (unsigned char *)malloc(new_width * new_height * channel_count * sizeof(unsigned char));
     if (!newdata) {
         free_image_data(data);
         return;
     }
 
-}*/
+    // Nouvelle image
+    int x, y;
+    for (y = 0; y < new_height; y++) {
+        for (x = 0; x < new_width; x++) {
+            int posy = (y / X); 
+            int posx = (x / X);
+            newdata[(y * new_width + x)* channel_count] = data[(posy * width + posx) * channel_count];
+            newdata[(y * new_width + x)* channel_count + 1] = data[(posy * width + posx) * channel_count + 1];
+            newdata[(y * new_width + x)* channel_count + 2] = data[(posy * width + posx) * channel_count + 2];
+        }
+    }
+    
+    // Création de la nouvelle image
+    write_image_data("image_out.bmp", newdata, new_width, new_height);
+
+    // Libération de la mémoire
+    free_image_data(data);
+    free(newdata);
+}

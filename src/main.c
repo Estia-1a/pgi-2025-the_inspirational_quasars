@@ -87,16 +87,15 @@ int main(int argc, char **argv) {
     mirror_vertical("image_out.bmp");
   }
   else if ( strncmp( configuration.command, "scale_crop", 9 ) == 0 ) {
-    printf("scale_crop\n");
     int center_x = atoi(configuration.arguments[0]);
     int center_y = atoi(configuration.arguments[1]);
     int new_width = atoi(configuration.arguments[2]);
     int new_height = atoi(configuration.arguments[3]);
     scale_crop(configuration.filenames[0], center_x, center_y, new_width,new_height);
   }
-  /*else if (strncmp( configuration.command, "scale_nearest", 15) == 0){
-    int X = atoi(configuration.arguments[0]);
+  else if (strncmp( configuration.command, "scale_nearest", 15) == 0){
+    float X = atof(configuration.arguments[0]);
     scale_nearest(configuration.filenames[0], X);
-  }*/
+  }
   return 0;
 }
