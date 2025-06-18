@@ -449,25 +449,54 @@ void mirror_vertical(char *source_path){
     free_image_data(data);
 }
 
-void scale_crop(char *source_path, int center_x, int center_y, int new_width, int new_height){
+void scale_crop(char *source_path, int center_x, int center_y, int new_width, int new_height){    
+    printf("scale_crop\n");
+
+    // Initialisation
     int width, height, channel_count;
     unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
+
+    // Vérification des paramètres d'entrée
+    if (new_width >= width || new_height >= height) {    
+        printf("Erreur de plage\n");
+        free_image_data(data);
+        return;
+    }
+
+    // Mise en place de la mémoire pour nouvelle image
     unsigned char *newdata = (unsigned char *)malloc(new_width * new_height * channel_count * sizeof(unsigned char));
     if (!newdata) {
         free_image_data(data);
         return;
     }
- 
-    int i, x, y;
-    for(y = center_y - new_height/2; y < (center_y - new_height/2) + new_height; y++){
-         for (x = center_x - new_width/2; x < (center_x - new_width/2) + new_width; x++){
+    // Création du repére de la nouvelle image
+    int top_left_x = center_x - new_width / 2;
+    int top_left_y = center_y - new_height / 2;
+
+    // Vérification du repére de l'image
+    if (top_left_x < 0 ){top_left_x = 0;}
+    if (top_left_y < 0 ){top_left_y = 0;}
+    if (top_left_x + new_width > width) { top_left_x = width - new_width;}
+    if (top_left_y + new_height > height) { top_left_y = height - new_height;}
+
+    // ajout des valeurs a la mémoire de la nouvelle image
+    int i, x, y, orig_x, orig_y;
+    for(y = 0; y < new_height; y++){
+         for (x = 0; x < new_width; x++){
+            orig_x = top_left_x + x;
+            orig_y = top_left_y + y;
+
             for (i = 0; i < channel_count; i++){
-                newdata[(y*width + x)*3 + i - (((center_y - new_height/2)*width + center_x - new_width/2)*3 + i)] = data[(y*width + x)*3 + i];
+                newdata[(y * new_width + x) * channel_count + i] = data[(orig_y * width + orig_x) * channel_count + i];
             }
         }
     }
+
+    // Création de la nouvelle image
     write_image_data("image_out.bmp", newdata, new_width, new_height);
+
+    // Libération de la mémoire
     free_image_data(data);
     free(newdata);
 }
