@@ -102,5 +102,8 @@ int main(int argc, char **argv) {
     float X = atof(configuration.arguments[0]);
     scale_nearest(configuration.filenames[0], X);
   }
+  else if (strncmp( configuration.command, "color_desaturate", 17) == 0){
+    color_desaturate(configuration.filenames[0]);
+  }
   return 0;
 }

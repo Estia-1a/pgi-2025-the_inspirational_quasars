@@ -601,3 +601,47 @@ void scale_bilinear(char *source_path, float X){
     free_image_data(data);
     free(newdata);
 }
+
+int maxi(int x, int y, int z){
+	int max = x;
+	if (x<y){
+		max = y;
+    }
+    if (y<z){
+		max = z;
+	}
+    else if(x<z){
+        max = z;
+    }
+	return max;
+}
+ 
+int mini(int x, int y, int z){
+	int max = x;
+	if (x>y){
+		max = y;
+    }
+    if (y>z){
+		max = z;
+	}
+    else if(x>z){
+        max = z;
+    }
+	return max;
+}
+
+void color_desaturate(char *source_path){
+    int width, height, channel_count;
+    unsigned char *data;
+    int i;
+    int couleur = 0;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+    for (i=0;i<width*height*3;i+=3){
+        couleur = (maxi(data[i],data[i+1],data[i+2])+ mini(data[i],data[i+1],data[i+2]))/2;
+        data[i] = couleur;
+        data[i+1] = couleur;
+        data[i+2] = couleur;
+    }
+    write_image_data("image_out.bmp", data, width, height);  
+    free_image_data(data);
+}

@@ -49,4 +49,6 @@ void scale_crop(char *source_path, int center_x, int center_y, int new_width, in
 void scale_nearest(char *source_path, float X);
 
 void scale_bilinear(char *source_path, float X);
+
+void color_desaturate(char *source_path);
 #endif
