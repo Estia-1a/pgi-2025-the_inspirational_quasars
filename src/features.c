@@ -449,9 +449,7 @@ void mirror_vertical(char *source_path){
     free_image_data(data);
 }
 
-void scale_crop(char *source_path, int center_x, int center_y, int new_width, int new_height){    
-    printf("scale_crop\n");
-
+void scale_crop(char *source_path, int center_x, int center_y, int new_width, int new_height){
     // Initialisation
     int width, height, channel_count;
     unsigned char *data;
@@ -499,4 +497,17 @@ void scale_crop(char *source_path, int center_x, int center_y, int new_width, in
     // Libération de la mémoire
     free_image_data(data);
     free(newdata);
+}
+
+void scale_nearest(char *source_path, int X){
+    printf("scale_nearest\n");
+    int width, height, channel_count;
+    unsigned char* data;
+    read_image_data(source_path, &data, &width, &height, &channel_count);
+ 
+    unsigned char *newdata = (unsigned char *)malloc(width * height * channel_count * sizeof(unsigned char));
+    if (!newdata) {
+        free_image_data(data);
+        return;
+    }
 }

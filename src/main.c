@@ -93,5 +93,9 @@ int main(int argc, char **argv) {
     int new_height = atoi(configuration.arguments[3]);
     scale_crop(configuration.filenames[0], center_x, center_y, new_width,new_height);
   }
+  else if (strncmp( configuration.command, "scale_nearest", 15) == 0){
+    int X = atoi(configuration.arguments[0]);
+    scale_nearest(configuration.filenames[0], X);
+  }
   return 0;
 }
