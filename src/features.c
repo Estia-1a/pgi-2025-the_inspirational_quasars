@@ -65,7 +65,8 @@ void print_pixel(char *source_path, int x, int y)
     free_image_data(data);
 }
 
-void max_pixel(char *source_path){
+void max_pixel(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int  i, j, maxi=-1, somme=0, x, y, R, G, B;
@@ -88,7 +89,8 @@ void max_pixel(char *source_path){
     free_image_data(data);
 }
 
-void min_pixel(char *source_path){
+void min_pixel(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int  i, j, mini=1000, somme=0, x, y, R, G, B;
@@ -189,7 +191,8 @@ void min_component(char *source_path, char composante)
     free_image_data(data);
 }
 
-void stat_report(char *source_path){
+void stat_report(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
@@ -232,7 +235,8 @@ void stat_report(char *source_path){
     free_image_data(data);
 }
 
-void color_red(char *source_path){
+void color_red(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int i;
@@ -249,7 +253,8 @@ void color_red(char *source_path){
     free_image_data(data);
 }
 
-void color_blue(char *source_path){
+void color_blue(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int i;
@@ -266,7 +271,8 @@ void color_blue(char *source_path){
     free_image_data(data);
 }
 
-void color_green(char *source_path){
+void color_green(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int i;
@@ -283,7 +289,8 @@ void color_green(char *source_path){
     free_image_data(data);
 }
 
-void color_gray(char *source_path){
+void color_gray(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int i, j, somme = 0, couleur = 0;
@@ -302,7 +309,8 @@ void color_gray(char *source_path){
     free_image_data(data);
 }
 
-void color_invert(char *source_path){
+void color_invert(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int i;
@@ -314,7 +322,8 @@ void color_invert(char *source_path){
     free_image_data(data);
 }
 
-void color_gray_luminance(char *source_path){
+void color_gray_luminance(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int i, j;
@@ -341,7 +350,8 @@ void color_gray_luminance(char *source_path){
     free_image_data(data);
 }
 
-void rotate_cw(char *source_path) {
+void rotate_cw(char *source_path)
+{
     int width, height, channel_count;
     unsigned char* data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
@@ -372,7 +382,8 @@ void rotate_cw(char *source_path) {
     free_image_data(data);
 }
 
-void rotate_acw(char *source_path) {
+void rotate_acw(char *source_path)
+{
     int width, height, channel_count;
     unsigned char* data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
@@ -403,7 +414,8 @@ void rotate_acw(char *source_path) {
     free_image_data(data);
 }
 
-void mirror_horizontal(char *source_path){
+void mirror_horizontal(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
@@ -427,7 +439,8 @@ void mirror_horizontal(char *source_path){
     free_image_data(data);
 }
 
-void mirror_vertical(char *source_path){
+void mirror_vertical(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
@@ -451,7 +464,8 @@ void mirror_vertical(char *source_path){
     free_image_data(data);
 }
 
-void scale_crop(char *source_path, int center_x, int center_y, int new_width, int new_height){
+void scale_crop(char *source_path, int center_x, int center_y, int new_width, int new_height)
+{
     // Inizializacion
     int width, height, channel_count;
     unsigned char *data;
@@ -493,7 +507,8 @@ void scale_crop(char *source_path, int center_x, int center_y, int new_width, in
     free(newdata);
 }
 
-void scale_nearest(char *source_path, float X){
+void scale_nearest(char *source_path, float X)
+{
     // Initialisation
     int width, height, channel_count;
     unsigned char* data;
@@ -531,7 +546,8 @@ void scale_nearest(char *source_path, float X){
     free(newdata);
 }
 
-void scale_bilinear(char *source_path, float X){
+void scale_bilinear(char *source_path, float X)
+{
     // Inicializacion
     int width, height, channel_count;
     unsigned char* data;
@@ -598,7 +614,8 @@ void scale_bilinear(char *source_path, float X){
     free(newdata);
 }
 
-int maxi(int x, int y, int z){
+int maxi(int x, int y, int z)
+{
 	int max = x;
 	if (x<y){
 		max = y;
@@ -612,7 +629,8 @@ int maxi(int x, int y, int z){
 	return max;
 }
  
-int mini(int x, int y, int z){
+int mini(int x, int y, int z)
+{
 	int max = x;
 	if (x>y){
 		max = y;
@@ -626,7 +644,8 @@ int mini(int x, int y, int z){
 	return max;
 }
 
-void color_desaturate(char *source_path){
+void color_desaturate(char *source_path)
+{
     int width, height, channel_count;
     unsigned char *data;
     int i;

@@ -51,4 +51,5 @@ void scale_nearest(char *source_path, float X);
 void scale_bilinear(char *source_path, float X);
 
 void color_desaturate(char *source_path);
+
 #endif
