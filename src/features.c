@@ -289,7 +289,7 @@ void color_gray(char *source_path){
     int i, j, somme = 0, couleur = 0;
     read_image_data(source_path, &data, &width, &height, &channel_count);
     for (i=0;i<width*height;i++){
-        for (j=0;j<3;j++){
+        for (j=0;j<2;j++){
             somme += data[i*3+j];
         }
         couleur = somme/3;
@@ -317,7 +317,8 @@ void color_invert(char *source_path){
 void color_gray_luminance(char *source_path){
     int width, height, channel_count;
     unsigned char *data;
-    int i, j, somme=0;
+    int i, j;
+    float somme=0;
     read_image_data(source_path, &data, &width, &height, &channel_count);
     for (i=0;i<width*height;i++){
         for (j=0;j<3;j++){
@@ -451,17 +452,13 @@ void mirror_vertical(char *source_path){
 }
 
 void scale_crop(char *source_path, int center_x, int center_y, int new_width, int new_height){
-    // Initialisation
+    // Inizializacion
     int width, height, channel_count;
     unsigned char *data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
 
-    // Vérification des paramètres d'entrée
-    if (new_width >= width || new_height >= height) {    
-        printf("Erreur de plage\n");
-        free_image_data(data);
-        return;
-    }
+    center_x = (center_x < 0) ? 0 : (center_x >= width) ? width - 1 : center_x;
+    center_y = (center_y < 0) ? 0 : (center_y >= height) ? height - 1 : center_y;
 
     // Mise en place de la mémoire pour nouvelle image
     unsigned char *newdata = (unsigned char *)malloc(new_width * new_height * channel_count * sizeof(unsigned char));
@@ -469,15 +466,9 @@ void scale_crop(char *source_path, int center_x, int center_y, int new_width, in
         free_image_data(data);
         return;
     }
-    // Création du repére de la nouvelle image
+    // Creation of the new image
     int top_left_x = center_x - new_width / 2;
     int top_left_y = center_y - new_height / 2;
-
-    // Vérification du repére de l'image
-    if (top_left_x < 0 ){top_left_x = 0;}
-    if (top_left_y < 0 ){top_left_y = 0;}
-    if (top_left_x + new_width > width) { top_left_x = width - new_width;}
-    if (top_left_y + new_height > height) { top_left_y = height - new_height;}
 
     // ajout des valeurs a la mémoire de la nouvelle image
     int i, x, y, orig_x, orig_y;
@@ -486,9 +477,11 @@ void scale_crop(char *source_path, int center_x, int center_y, int new_width, in
             orig_x = top_left_x + x;
             orig_y = top_left_y + y;
 
-            for (i = 0; i < channel_count; i++){
-                newdata[(y * new_width + x) * channel_count + i] = data[(orig_y * width + orig_x) * channel_count + i];
-            }
+            if (orig_x >= 0 && orig_x < width && orig_y >= 0 && orig_y < height){
+                for (i = 0; i < channel_count; i++){
+                    newdata[(y * new_width + x) * channel_count + i] = data[(orig_y * width + orig_x) * channel_count + i];
+                }
+            }  
         }
     }
 
@@ -519,8 +512,11 @@ void scale_nearest(char *source_path, float X){
     int x, y;
     for (y = 0; y < new_height; y++) {
         for (x = 0; x < new_width; x++) {
-            int posy = (y / X); 
-            int posx = (x / X);
+            int posy = (int)(y / X + 0.5f); 
+            int posx = (int)(x / X + 0.5f);
+            posx = (posx >= width) ? width - 1 : posx;
+            posy = (posy >= height) ? height - 1 : posy;
+
             newdata[(y * new_width + x)* channel_count] = data[(posy * width + posx) * channel_count];
             newdata[(y * new_width + x)* channel_count + 1] = data[(posy * width + posx) * channel_count + 1];
             newdata[(y * new_width + x)* channel_count + 2] = data[(posy * width + posx) * channel_count + 2];
@@ -536,12 +532,12 @@ void scale_nearest(char *source_path, float X){
 }
 
 void scale_bilinear(char *source_path, float X){
-    // Initialisation
+    // Inicializacion
     int width, height, channel_count;
     unsigned char* data;
     read_image_data(source_path, &data, &width, &height, &channel_count);
     
-    // Calcul de la nouvelle taille
+    // Calculo de nuevas dimensiones
     int new_width = width * X;
     int new_height = height * X;
     unsigned char *newdata = (unsigned char *)malloc(new_width * new_height * channel_count * sizeof(unsigned char));
@@ -550,28 +546,28 @@ void scale_bilinear(char *source_path, float X){
         return;
     }
 
-    // Nouvelle image
+    // Nueva imagen
     int x, y, i;
     for (y = 0; y < new_height; y++) {
         for (x = 0; x < new_width; x++) {
             int posX = (x / X);
             int posY = (y / X); 
 
-            // Calcul des coordonnées pour l'interpolation bilinéaire
+            // Calcula de posiciones para la interpolación
             int x1 = posX;
             int y1 = posY;
             int x2 = (posX + 1 < width) ? posX + 1 : posX;
             int y2 = (posY + 1 < height) ? posY + 1 : posY;
             
-            // Points interpolation
-            unsigned char p1 = (y1 * width + x1) * channel_count;
-            unsigned char p2 = (y1 * width + x2) * channel_count;
-            unsigned char p3 = (y2 * width + x1) * channel_count;
-            unsigned char p4 = (y2 * width + x2) * channel_count;
+            // Puntos de interpolación en el array
+            unsigned int p1 = (y1 * width + x1) * channel_count;
+            unsigned int p2 = (y1 * width + x2) * channel_count;
+            unsigned int p3 = (y2 * width + x1) * channel_count;
+            unsigned int p4 = (y2 * width + x2) * channel_count;
 
-            // Calcul des coefficients d'interpolation
-            float d1x = fabs(x/X - x1);
-            float d1y = fabs(y/X - y1);
+            // Calculo de los factores de interpolación
+            float d1x = fabs((x/X) - x1);
+            float d1y = fabs((y/X) - y1);
             float d2x = 1 -  d1x;
             float d2y = d1y;
             float d3x = d1x;
@@ -579,10 +575,10 @@ void scale_bilinear(char *source_path, float X){
             float d4x = d2x;
             float d4y = d3y;
 
-            // Calcul pour chacun des canaux
+            // Calculo para cada canal de color
             for (i = 0; i < channel_count; i++) {
-                // Interpolation bilinéaire
-                newdata[(posY * new_width + posX)* channel_count + i] = 
+                // Interpolación bilineal
+                newdata[(y * new_width + x)* channel_count + i] = 
                     (unsigned char)(
                         data[p1 + i] * d1x * d1y +
                         data[p2 + i] * d2x * d2y +
@@ -594,10 +590,10 @@ void scale_bilinear(char *source_path, float X){
         }
     }
     
-    // Création de la nouvelle image
+    // Créacion de la nueva imagen
     write_image_data("image_out.bmp", newdata, new_width, new_height);
 
-    // Libération de la mémoire
+    // Vacio de la memoria
     free_image_data(data);
     free(newdata);
 }
