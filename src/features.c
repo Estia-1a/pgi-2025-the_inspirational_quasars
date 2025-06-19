@@ -289,7 +289,7 @@ void color_gray(char *source_path){
     int i, j, somme = 0, couleur = 0;
     read_image_data(source_path, &data, &width, &height, &channel_count);
     for (i=0;i<width*height;i++){
-        for (j=0;j<2;j++){
+        for (j=0;j<3;j++){
             somme += data[i*3+j];
         }
         couleur = somme/3;
